@@ -285,24 +285,26 @@ class UserController extends Controller
     {
         try {
 
-            // $relationshipA = Friend::where('user_id_1', 13)
-            // ->where('user_id_2', 1);
-            // return Friend::where('user_id_1', 1)
-            //     ->where('user_id_2', 13)
-            //     ->union($relationshipA)
-            //     ->get();
+            if($request->email == ''){
+                return response()->json(['metaData' => ['code' => 400, 'message' => 'Email Cant Be Empty']], 400);
+            }
 
-                $profile = User::where('id', 13)->first();
-                $profileFriends = $profile->friends;
-                $profileFriendsIds = [];
-                foreach ($profileFriends as $entry){
-                    $profileFriendsIds[] = $entry->id;
-                    }
-                $loggedUserFriends = $profile->friends->whereIn('id', $profileFriendsIds);
+            $getUserRequest = User::select('users.id','email','status', 'user_id_1','user_id_2')
+            ->join('friends', 'users.id', '=', 'friends.user_id_2')
+            ->where('users.email', $request->email)
+            ->first();
 
-                return $loggedUserFriends;
+            $users = DB::select("SELECT u.email as friends,
+                COUNT(f3.user_id_2) Count
+                FROM friends f1
+                INNER JOIN friends f2 ON f2.user_id_1  = f1.user_id_2
+                INNER JOIN users u ON u.id = f2.user_id_1
+                LEFT JOIN friends f3 ON f3.user_id_1 = f1.user_id_1 AND f3.user_id_2 = f2.user_id_2
+                WHERE f1.user_id_1 = $getUserRequest->user_id_1
+                GROUP BY u.email");
 
-            // return response()->json(['metaData' => ['code' => 200, 'message' => 'Data Found'], 'response' => $users], 200);
+
+            return response()->json(['metaData' => ['code' => 200, 'message' => 'Data Found'], 'response' => $users], 200);
 
         } catch (\Throwable $th) {
             return response()->json(['metaData' => ['code' => 500, 'message' => $th->getMessage()]], 500);
