@@ -44,7 +44,7 @@ class UserController extends Controller
             ->first();
 
         if($checkIfExist){
-            return response()->json(['metaData' => ['code' => 400, 'message' => 'Request Already Send']], 400);
+            return response()->json(['metaData' => ['code' => 400, 'message' => 'You Already Request']], 400);
         }
 
         $from = User::select('id','email')
