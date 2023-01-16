@@ -6,7 +6,7 @@ Friendship Managemen, build with Lumen 8, that implements main functionalities s
 - List Friends
 - add friends
 - Accept / Reject
-- Mutual Friends (not yet)
+- Mutual Friends
 - block users
 
 ### Built With
