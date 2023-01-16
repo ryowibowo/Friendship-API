@@ -2,15 +2,13 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 Friendship Managemen, build with Lumen 8, that implements main functionalities such as: 
-    - List Friend Request
-    - List Friends
-    - add friends
-    - Accept / Reject
-    - Mutual Friends (not yet)
-    - block users
+- List Friend Request
+- List Friends
+- add friends
+- Accept / Reject
+- Mutual Friends (not yet)
+- block users
 
-
-- Search
 ### Built With
 
 - Lumen 8
@@ -46,7 +44,6 @@ DB_PASSWORD=yourPassword
 php artisan key:generate
 ```
 6. Create an empty database. Make sure that the name in the .env file corresponds with the created database.
-7.Migrate the database
 ```
 php artisan migrate
 ```
@@ -62,4 +59,4 @@ php -S localhost:8000 -t public
 ```
 
 ### How To run API 
-Import file "Logique API.postman_collection.json" Collection on Postman
+Import file "Friend Managemen.postman_collection.json" Collection on Postman
